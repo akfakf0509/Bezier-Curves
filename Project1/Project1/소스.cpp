@@ -1,6 +1,7 @@
 #pragma warning(disable:4996)
 #include <iostream>
 #include <Windows.h>
+
 using namespace std;
 class MyVector {
 private:
@@ -11,9 +12,12 @@ public:
 	MyVector(int x, int y) : x(x), y(y) {};
 	~MyVector() {};
 
-	void operator=(const MyVector& vec) {
-		this->x = vec.x;
-		this->y = vec.y;
+	float GetX() {
+		return x;
+	}
+	
+	float GetY() {
+		return y;
 	}
 
 	MyVector operator*(const MyVector& vec) {
@@ -22,7 +26,7 @@ public:
 		return tmp;
 	}
 
-	MyVector operator*(const float target) {
+	MyVector operator*(const float& target) {
 		MyVector tmp(this->x * target, this->y * target);
 
 		return tmp;
@@ -34,10 +38,20 @@ public:
 		return tmp;
 	}
 
-	MyVector operator+(const float target) {
+	MyVector operator+(const float& target) {
 		MyVector tmp(this->x + target, this->y + target);
 
 		return tmp;
+	}
+
+	void operator=(const MyVector& vec) {
+		this->x = vec.x;
+		this->y = vec.y;
+	}
+
+	void operator=(const float& target) {
+		this->x = target;
+		this->y = target;
 	}
 };
 int main() {
@@ -45,10 +59,11 @@ int main() {
 
 	MyVector A(-5, -3), B(-2, 3), C(5, 3);
 
-	while (t < 1) {
-		MyVector E(), F();
+	for (t; t <= 1; t += 0.01) {
+		MyVector P;
 
-		E = (A * (1 - t)) + (B * t);
+		P = A * ((1 - t) * (1 - t)) + B * t * (1 - t) * 2 + C * ((1 - t)*(1 - t));
 
+		printf("%f, %f\n", P.GetX(), P.GetY());
 	}
 }
