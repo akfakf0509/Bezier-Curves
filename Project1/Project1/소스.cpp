@@ -1,5 +1,6 @@
 #pragma warning(disable:4996)
 #include <iostream>
+#include <string>
 #include <Windows.h>
 
 using namespace std;
@@ -9,15 +10,23 @@ private:
 	float y;
 public:
 	MyVector() : x(0), y(0) {};
-	MyVector(int x, int y) : x(x), y(y) {};
+	MyVector(float x, float y) : x(x), y(y) {};
 	~MyVector() {};
 
 	float GetX() {
 		return x;
 	}
+
+	void SetX(float _x) {
+		this->x = _x;
+	}
 	
 	float GetY() {
 		return y;
+	}
+
+	void SetY(float _y) {
+		this->y = _y;
 	}
 
 	MyVector operator*(const MyVector& vec) {
@@ -54,16 +63,34 @@ public:
 		this->y = target;
 	}
 };
+
 int main() {
 	float t = 0;
 
-	MyVector A(-5, -3), B(-2, 3), C(5, 3);
+	MyVector vecs[3];
+
+	cout << "3개의 점의 좌표를 입력" << endl;
+
+	for (int a = 0; a < 3; a++) {
+		float x = 0, y = 0;
+
+		cin >> x;
+		cin >> y;
+
+		vecs[a].SetX(x);
+		vecs[a].SetY(y);
+	}
 
 	for (t; t <= 1; t += 0.01) {
-		MyVector P;
+		MyVector E, F, G;
 
-		P = A * ((1 - t) * (1 - t)) + B * t * (1 - t) * 2 + C * ((1 - t)*(1 - t));
+		E = vecs[0] * (1.0 - t) + vecs[1] * t;
+		F = vecs[1] * (1.0 - t) + vecs[2] * t;
 
-		printf("%f, %f\n", P.GetX(), P.GetY());
+		G = E * (1.0 - t) + F * t;
+
+		printf("(%f, %f)\n", G.GetX(), G.GetY());
 	}
 }
+
+//https://www.desmos.com/calculator
