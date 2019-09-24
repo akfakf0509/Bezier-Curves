@@ -1,95 +1,64 @@
 #pragma warning(disable:4996)
 #include <iostream>
-#include <string>
-#include <Windows.h>
-
+#include <vector>
+#include <algorithm>
 using namespace std;
-class MyVector {
-private:
+
+class Vector2 {
+public:
 	float x;
 	float y;
-public:
-	MyVector() : x(0), y(0) {};
-	MyVector(float x, float y) : x(x), y(y) {};
-	~MyVector() {};
 
-	float GetX() {
-		return x;
+	Vector2(float _x, float _y) : x(_x), y(_y) {
+	};
+	~Vector2() {
+	};
+
+	Vector2 operator*(const float& _p) {
+		return Vector2(x * _p, y * _p);
 	}
-
-	void SetX(float _x) {
-		this->x = _x;
-	}
-	
-	float GetY() {
-		return y;
-	}
-
-	void SetY(float _y) {
-		this->y = _y;
-	}
-
-	MyVector operator*(const MyVector& vec) {
-		MyVector tmp(this->x * vec.x, this->y * vec.y);
-		
-		return tmp;
-	}
-
-	MyVector operator*(const float& target) {
-		MyVector tmp(this->x * target, this->y * target);
-
-		return tmp;
-	}
-
-	MyVector operator+(const MyVector& vec) {
-		MyVector tmp(this->x + vec.x, this->y + vec.y);
-
-		return tmp;
-	}
-
-	MyVector operator+(const float& target) {
-		MyVector tmp(this->x + target, this->y + target);
-
-		return tmp;
-	}
-
-	void operator=(const MyVector& vec) {
-		this->x = vec.x;
-		this->y = vec.y;
-	}
-
-	void operator=(const float& target) {
-		this->x = target;
-		this->y = target;
+	Vector2 operator+(const Vector2& v) {
+		return Vector2(x + v.x, y + v.y);
 	}
 };
 
+Vector2 GetBezier(float t, vector<Vector2>* _vec) {
+	if (_vec->size() == 1) {
+		return (*_vec)[0];
+	}
+	
+	vector<Vector2>* tmp = new vector<Vector2>;
+
+	for (auto iter = _vec->begin(); iter != _vec->end() - 1; iter++) {
+		tmp->push_back(iter->operator*(1 - t) + (iter + 1)->operator*(t));
+	}
+
+	return GetBezier(t, tmp);
+}
+
 int main() {
-	float t = 0;
+	vector<Vector2>* vec = new vector<Vector2>;
 
-	MyVector vecs[3];
+	int dot_count = 0;
 
-	cout << "3개의 점의 좌표를 입력" << endl;
+	cout << "How many dots" << endl;
 
-	for (int a = 0; a < 3; a++) {
-		float x = 0, y = 0;
+	cin >> dot_count;
+
+	cout << "Input x, y" << endl;
+
+	for (int a = 0; a < dot_count; a++) {
+		float x, y;
 
 		cin >> x;
 		cin >> y;
 
-		vecs[a].SetX(x);
-		vecs[a].SetY(y);
+		vec->push_back(Vector2(x, y));
 	}
 
-	for (t; t <= 1; t += 0.01) {
-		MyVector E, F, G;
-
-		E = vecs[0] * (1.0 - t) + vecs[1] * t;
-		F = vecs[1] * (1.0 - t) + vecs[2] * t;
-
-		G = E * (1.0 - t) + F * t;
-
-		printf("(%f, %f)\n", G.GetX(), G.GetY());
+	for (float a = 0; a < 1; a += 0.01f) {
+		Vector2 v = GetBezier(a, vec);
+		cout << "(" << v.x << ", " << v.y << ")" << endl;
 	}
 }
 

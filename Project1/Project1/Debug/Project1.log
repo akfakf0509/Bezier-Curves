@@ -1,6 +1,2 @@
 ﻿  소스.cpp
-c:\users\sunrin-08\documents\github\bezier-curves\project1\project1\소스.cpp(84): warning C4305: '+=': 'double'에서 'float'(으)로 잘립니다.
-c:\users\sunrin-08\documents\github\bezier-curves\project1\project1\소스.cpp(87): warning C4244: '인수': 'double'에서 'const float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\sunrin-08\documents\github\bezier-curves\project1\project1\소스.cpp(88): warning C4244: '인수': 'double'에서 'const float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\sunrin-08\documents\github\bezier-curves\project1\project1\소스.cpp(90): warning C4244: '인수': 'double'에서 'const float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  Project1.vcxproj -> C:\Users\Sunrin-08\Documents\GitHub\Bezier-Curves\Project1\Debug\Project1.exe
+  Project1.vcxproj -> C:\동관\Github\Bezier-Curves\Project1\Debug\Project1.exe
